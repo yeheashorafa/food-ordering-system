@@ -1,0 +1,39 @@
+name: Order Service CI/CD
+
+on:
+  push:
+    branches: [ "main" ]
+    paths:
+      - "order-service/**"
+      - ".github/workflows/order-service-ci-cd.yml"
+  workflow_dispatch:
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Build Order Service
+        working-directory: order-service
+        run: mvn -B -DskipTests package
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and Push Docker Image
+        uses: docker/build-push-action@v6
+        with:
+          context: ./order-service
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/food-ordering-order-service:latest

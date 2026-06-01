@@ -1,0 +1,63 @@
+{
+  "info": {
+    "name": "Food Ordering System Final",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Gateway Health",
+      "request": {
+        "method": "GET",
+        "url": "http://localhost:8088/api/gateway/health"
+      }
+    },
+    {
+      "name": "Get Menu",
+      "request": {
+        "method": "GET",
+        "url": "http://localhost:8088/api/gateway/restaurants/menu"
+      }
+    },
+    {
+      "name": "Create Order",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"customerId\":1,\"restaurantItemId\":1,\"quantity\":2,\"deliveryAddress\":\"Gaza - Al Remal\"}"
+        },
+        "url": "http://localhost:8088/api/gateway/orders"
+      }
+    },
+    {
+      "name": "Create Payment Failure Order",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"customerId\":1,\"restaurantItemId\":3,\"quantity\":2,\"deliveryAddress\":\"Gaza - Al Remal\"}"
+        },
+        "url": "http://localhost:8088/api/gateway/orders"
+      }
+    },
+    {
+      "name": "Get Order",
+      "request": {
+        "method": "GET",
+        "url": "http://localhost:8088/api/gateway/orders/1"
+      }
+    }
+  ]
+}

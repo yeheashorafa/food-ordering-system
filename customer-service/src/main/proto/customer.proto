@@ -1,0 +1,21 @@
+syntax = "proto3";
+package customer;
+option java_multiple_files = true;
+option java_package = "com.example.customerservice.grpc";
+option java_outer_classname = "CustomerProto";
+
+service CustomerGrpcService {
+  rpc GetCustomerById (CustomerRequest) returns (CustomerReply);
+}
+
+message CustomerRequest {
+  int64 id = 1;
+}
+
+message CustomerReply {
+  int64 id = 1;
+  string name = 2;
+  string email = 3;
+  string phone = 4;
+  string address = 5;
+}

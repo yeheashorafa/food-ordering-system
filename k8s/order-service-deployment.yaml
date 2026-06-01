@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: order-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: order-service
+  template:
+    metadata:
+      labels:
+        app: order-service
+    spec:
+      containers:
+        - name: order-service
+          image: your-dockerhub-username/food-ordering-order-service:latest
+          ports:
+            - containerPort: 8082
+          env:
+            - name: RABBITMQ_HOST
+              value: rabbitmq
+            - name: CUSTOMER_SERVICE_URL
+              value: http://customer-service:8080
+            - name: RESTAURANT_SERVICE_URL
+              value: http://restaurant-service:8081
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: order-service
+spec:
+  selector:
+    app: order-service
+  ports:
+    - protocol: TCP
+      port: 8082
+      targetPort: 8082
+  type: ClusterIP

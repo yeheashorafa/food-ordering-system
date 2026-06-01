@@ -1,0 +1,21 @@
+type Query {
+  orderDetails(orderId: ID!): Order
+  orders: [Order]
+}
+
+type Order {
+  id: ID!
+  customerId: ID
+  customerName: String
+  restaurantItemId: ID
+  itemName: String
+  quantity: Int
+  totalPrice: Float
+  deliveryAddress: String
+  status: String
+  sagaStatus: String
+  correlationId: String
+  transactionId: String
+  driverId: String
+  estimatedArrival: String
+}
